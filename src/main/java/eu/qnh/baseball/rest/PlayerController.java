@@ -2,15 +2,12 @@ package eu.qnh.baseball.rest;
 
 import eu.qnh.baseball.model.Player;
 import eu.qnh.baseball.persistence.PlayerRepository;
+import eu.qnh.baseball.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.Optional;
@@ -19,20 +16,25 @@ import java.util.Optional;
 @RequestMapping("api/players")
 public class PlayerController {
 
+
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
+
+    @Value("${application.controllerName}")
+    private String controllerName;
+
 
 
     @GetMapping
     public Iterable<Player> list() {
 
-        return this.playerRepository.findAll();
+        return this.playerService.findAll();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<Player> findById(@PathVariable long id) {
 
-        Optional<Player> optionalPlayer = this.playerRepository.findById(id);
+        Optional<Player> optionalPlayer = this.playerService.findById(id);
 
         if(optionalPlayer.isPresent()) {
             // dan pas
@@ -45,8 +47,14 @@ public class PlayerController {
 //            throw new ResourceNotFoundException();
 //            return ResponseEntity.notFound().build();
         }
-
     }
+
+    @PostMapping
+    public ResponseEntity<Player> create(@RequestBody Player newPlayer) {
+        return ResponseEntity.ok(this.playerService.save(newPlayer));
+    }
+
+
 
     @PostConstruct // again this is for test purpose only and to get started ...
     public void addSomeData() {
@@ -56,7 +64,9 @@ public class PlayerController {
             player.setPosition("FirstHalve");
             player.setShirtNumber(i);
 
-            this.playerRepository.save(player);
+            this.playerService.save(player);
+
+            System.err.println(player+", "+this.controllerName);
         }
     }
 }
