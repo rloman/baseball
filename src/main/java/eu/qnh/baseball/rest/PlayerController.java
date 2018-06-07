@@ -1,5 +1,6 @@
 package eu.qnh.baseball.rest;
 
+import eu.qnh.baseball.model.Ball;
 import eu.qnh.baseball.model.Player;
 import eu.qnh.baseball.service.PlayerService;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +27,14 @@ public class PlayerController {
 
     @Value("${application.controllerName}")
     private String controllerName;
+
+    @Autowired
+    private Ball michael;
+
+
+    @Autowired
+    private Ball valerie;
+
 
 
 
@@ -52,8 +63,13 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<Player> create(@RequestBody Player newPlayer) {
-        return ResponseEntity.ok(this.playerService.save(newPlayer));
+    public ResponseEntity<Player> create(@RequestBody Player newPlayer) throws URISyntaxException {
+
+        Player savedResult = this.playerService.save(newPlayer);
+
+//        return new ResponseEntity<>(savedResult, HttpStatus.CREATED);
+
+        return ResponseEntity.created(new URI("http://localhost:8080/api/player/"+savedResult.getId())).build();
     }
 
 
@@ -69,6 +85,10 @@ public class PlayerController {
             this.playerService.save(player);
 
             LOGGER.info("The player is saved [{}] with id [{}]", player, player.getId());
+
+            LOGGER.info("The ball of michael [{}]", this.michael);
+            LOGGER.info("The ball of valerie [{}]", this.valerie);
+
         }
     }
 }
