@@ -1,8 +1,9 @@
 package eu.qnh.baseball.rest;
 
 import eu.qnh.baseball.model.Player;
-import eu.qnh.baseball.persistence.PlayerRepository;
 import eu.qnh.baseball.service.PlayerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("api/players")
 public class PlayerController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerController.class);
 
     @Autowired
     private PlayerService playerService;
@@ -66,7 +68,7 @@ public class PlayerController {
 
             this.playerService.save(player);
 
-            System.err.println(player+", "+this.controllerName);
+            LOGGER.info("The player is saved [{}] with id [{}]", player, player.getId());
         }
     }
 }

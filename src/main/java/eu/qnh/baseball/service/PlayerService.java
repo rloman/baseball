@@ -1,14 +1,11 @@
 package eu.qnh.baseball.service;
 
-import eu.qnh.baseball.InvalidNameException;
 import eu.qnh.baseball.model.Player;
 import eu.qnh.baseball.persistence.PlayerRepository;
-import org.omg.CORBA.ORBPackage.InvalidName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.NameNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
