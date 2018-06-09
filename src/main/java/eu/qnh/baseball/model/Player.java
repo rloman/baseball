@@ -14,15 +14,6 @@ public class Player implements Serializable {
     private String position;
     private int shirtNumber;
 
-    public Player() {
-
-    }
-
-    // for testing purposes only
-    public Player(long id) {
-        this.id = id;
-    }
-
     @ManyToOne
     private Team team;
 
@@ -52,6 +43,12 @@ public class Player implements Serializable {
 
     public void setShirtNumber(int shirtNumber) {
         this.shirtNumber = shirtNumber;
+    }
+
+
+    // for testing purposes only
+    void setId(long id) {
+        this.id = id;
     }
 
     @Override

@@ -67,9 +67,9 @@ public class PlayerController {
 
         Player savedResult = this.playerService.save(newPlayer);
 
-//        return new ResponseEntity<>(savedResult, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedResult, HttpStatus.CREATED);
 
-        return ResponseEntity.created(new URI("http://localhost:8080/api/player/"+savedResult.getId())).build();
+//        return ResponseEntity.created(new URI("http://localhost:8080/api/player/"+savedResult.getId())).build();
     }
 
 

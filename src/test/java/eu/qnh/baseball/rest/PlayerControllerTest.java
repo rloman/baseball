@@ -2,6 +2,7 @@ package eu.qnh.baseball.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qnh.baseball.model.Player;
+import eu.qnh.baseball.model.PlayerTestUtils;
 import eu.qnh.baseball.service.PlayerService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -44,7 +45,7 @@ public class PlayerControllerTest {
     @Test
     public void addPlayerTest() throws Exception {
 
-        Player player = new Player(3L);
+        Player player = PlayerTestUtils.createPlayerWithId(3L);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(player);
 
