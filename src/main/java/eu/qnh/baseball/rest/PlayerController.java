@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Optional;
 
 @RestController
@@ -31,10 +29,8 @@ public class PlayerController {
     @Autowired
     private Ball michael;
 
-
     @Autowired
     private Ball valerie;
-
 
 
 
@@ -52,24 +48,21 @@ public class PlayerController {
         if(optionalPlayer.isPresent()) {
             // dan pas
             return new ResponseEntity<>(optionalPlayer.get(), HttpStatus.OK);
-
-//            return ResponseEntity.ok(optionalPlayer.get());
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//            throw new ResourceNotFoundException();
-//            return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Player> create(@RequestBody Player newPlayer) throws URISyntaxException {
+    public ResponseEntity<Player> create(@RequestBody Player newPlayer){
 
         Player savedResult = this.playerService.save(newPlayer);
 
         return new ResponseEntity<>(savedResult, HttpStatus.CREATED);
 
-//        return ResponseEntity.created(new URI("http://localhost:8080/api/player/"+savedResult.getId())).build();
+		//since in fact after creating the client might expect an url to click for details =>
+		// return ResponseEntity.created(new URI("http://localhost:8080/api/player/"+savedResult.getId())).build();
     }
 
 
@@ -88,7 +81,6 @@ public class PlayerController {
 
             LOGGER.info("The ball of michael [{}]", this.michael);
             LOGGER.info("The ball of valerie [{}]", this.valerie);
-
         }
     }
 }

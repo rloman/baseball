@@ -4,6 +4,9 @@ import eu.qnh.baseball.model.Ball;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/** This class shows how to create beans with Spring Boot
+ *
+ */
 @Configuration
 public class BaseballBeans {
 

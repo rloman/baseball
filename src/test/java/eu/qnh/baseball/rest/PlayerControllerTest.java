@@ -56,7 +56,6 @@ public class PlayerControllerTest {
                 .content(json)).andDo(print())
                 .andExpect(jsonPath("$.id", is(Long.valueOf(player.getId()).intValue())))
                 .andExpect(jsonPath("$.name", is(player.getName())))
-//                .andExpect(jsonPath("$.mixed", is(sport.isMixed())))
                 .andExpect(status().isCreated()
                 );
     }
